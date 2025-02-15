@@ -1,23 +1,22 @@
 package com.example.simpleWebApp.model;
 
-
-import org.springframework.stereotype.Component;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 
-@Component
+
 @Entity
 public class Account {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int accountId;
 	private String accountName;
 	private String accountEmail;
-	private String Password;
-	
+	private String password;
+	private String email;
 	public Account() {
-	
 	}
 
 	public Account(int accountId, String accountName, String accountEmail, String password) {
@@ -25,7 +24,7 @@ public class Account {
 		this.accountId = accountId;
 		this.accountName = accountName;
 		this.accountEmail = accountEmail;
-		//Password = password;
+		this.password = password;
 	}
 
 	public int getAccountId() {
@@ -53,11 +52,11 @@ public class Account {
 	}
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 
 	@Override
@@ -66,14 +65,16 @@ public class Account {
 				+ "[accountId=" + accountId + 
 				", accountName=" + accountName + 
 				", accountEmail=" + accountEmail + 
-				", Password=" + Password + 
+				", password=" + password + 
 				"]";
 	}
 
-	
+	public String getEmail() {
+		return email;
+	}
 
-	
-	
-	
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
  

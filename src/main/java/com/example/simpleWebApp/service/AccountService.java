@@ -13,23 +13,42 @@ public class AccountService {
 	
 	@Autowired
 	AccountRepo repo;
-//	List<Account> accounts = new ArrayList<>(Arrays.asList(
-//			new Account(101, "Ram", "ram07@x.com", "0702" ),
-//			new Account(102, "Shyam","shyam02@x.com", "0803"),
-//			new Account(103, "Sita", "sita77@z.com", "0589")
-//			));
-//	
+
 	public List<Account> getAccount() {
 		return repo.findAll();
 	}
 
 	public Account getAccountById(int accountId) {
-		return repo.findById(accountId).orElse(new Account());
+		return repo.findById(accountId).orElse(null);
 	}
 
-	public void addAccount(Account account) {
-		repo.save(account);
+	public Account getAccountByEmail(String accountEmail, String password) {
+		Account account=repo.findByEmail(accountEmail);
+		if(account!=null) {
+			if(account.getPassword().equals(password)) {
+				return account;
+			}
+			else {
+				throw new RuntimeException("Password is incorrect");
+			}
+		}
+		else {
+			throw new RuntimeException("Email does not exist");
+		}
 	}
+	
+	
+	
+	public void addAccount(Account account) {
+		Account existingAccount = repo.findByEmail(account.getAccountEmail());
+		if (existingAccount!=null) {
+			throw new RuntimeException("Email already exists");
+		}
+		else {
+			repo.save(account);
+		}
+	}
+	
 
 	public void updateAccount(Account account) {
 		repo.save(account);

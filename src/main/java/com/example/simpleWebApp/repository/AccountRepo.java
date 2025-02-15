@@ -8,4 +8,6 @@ import com.example.simpleWebApp.model.Account;
 @Repository
 public interface AccountRepo extends JpaRepository<Account, Integer> {
 
+	Account findByEmail(String Email);
+
 }
